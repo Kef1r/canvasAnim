@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+    <canvas id="canvas" width="800"  height="600" style="background-image: url(summer.jpg)"></canvas>
+    
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        
+        var img = new Image();
+        var mask = new Image();
+        
+        img.src = 'winter.jpg';
+        mask.src = 'nature-sprite.png';
+        img.onload = function(){
+		ctx.drawImage(img,0,0,800,600);
+	}
+        
+        var i = 0;
+        function draw(){
+            i++;
+        ctx.clearRect(0,0,800,600);
+        ctx.drawImage(mask,-800*i,0,800*23,600);
+        ctx.globalCompositeOperation = 'source-in';
+		ctx.drawImage(img,0,0,800,600);
+		ctx.globalCompositeOperation = 'source-over';
+		setTimeout(draw,100);
+         
+        }
+        document.querySelector('body').addEventListener('click',function(){
+		draw();
+		document.querySelector('body').className = 'start-animation';
+        })
+    </script>
+
+</body>
+</html>
